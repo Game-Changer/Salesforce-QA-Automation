@@ -1,0 +1,39 @@
+name: Run QA Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile TypeScript
+        run: npx tsc
+
+      - name: Run tests
+        run: npm run test
+        env:
+          SF_USERNAME: ${{ secrets.SF_QA_USERNAME }}
+          SF_PASSWORD: ${{ secrets.SF_QA_PASSWORD }}
+          SF_SECURITY_TOKEN: ${{ secrets.SF_QA_SECURITY_TOKEN }}
+          SF_LOGIN_URL: https://orgfarm-a0b0258612-dev-ed.develop.my.salesforce.com
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-reports
+          path: reports/

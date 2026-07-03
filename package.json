@@ -1,0 +1,35 @@
+{
+  "name": "salesforce-qa-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  
+  "scripts": {
+  "build": "tsc",
+  "clean": "rm -rf dist reports",
+  "test": "tsc && cucumber-js",
+  "test:headed": "HEADED=true tsc && cucumber-js",
+  "test:debug": "HEADED=true DEBUG=true tsc && cucumber-js"
+},
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Game-Changer/Salesforce-QA-Automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Game-Changer/Salesforce-QA-Automation/issues"
+  },
+  "homepage": "https://github.com/Game-Changer/Salesforce-QA-Automation#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.0.0",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.0",
+    "dotenv": "^17.4.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}

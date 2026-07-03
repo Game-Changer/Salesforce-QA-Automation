@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Compiled output
+dist/
+*.js
+!.github/workflows/*.js
+
+# Environment variables (NEVER commit secrets)
+.env
+.env.local
+.env.*.local
+
+# Test reports and logs
+reports/
+*.log
+logs/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Playwright
+.auth/
