@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": {
+        "owner": "typescript",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^([^(]*) \\((\\d+),(\\d+)\\): (error|warning) TS\\d+: (.*)$",
+          "file": 1,
+          "location": "$2:$3",
+          "severity": 4,
+          "message": 5
+        }
+      }
+    },
+    {
+      "label": "clean",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "clean"],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "npm",
+      "args": ["test"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "test-smoke",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:smoke"],
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "test-regression",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:regression"],
+      "presentation": {
+        "reveal": "always"
+      }
+    }
+  ]
+}

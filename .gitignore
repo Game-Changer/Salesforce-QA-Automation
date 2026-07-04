@@ -1,10 +1,9 @@
 # Dependencies
 node_modules/
 
-# Compiled output
+# Compiled output (source .js files like cucumber.js, test-runner.js and the
+# dashboard are tracked; compiled output only ever lands in dist/)
 dist/
-*.js
-!.github/workflows/*.js
 
 # Environment variables (NEVER commit secrets)
 .env
@@ -16,8 +15,7 @@ reports/
 *.log
 logs/
 
-# IDE and editor files
-.vscode/
+# IDE and editor files (.vscode is tracked — it holds the shared debug configs)
 .idea/
 *.swp
 *.swo

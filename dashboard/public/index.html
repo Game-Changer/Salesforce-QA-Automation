@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salesforce QA Test Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧪 Salesforce QA Automation</h1>
+      <p>Test Runner Dashboard</p>
+    </header>
+
+    <main>
+      <section class="control-panel">
+        <h2>Select Test Suite</h2>
+
+        <div class="form-group">
+          <label for="tagSelect">Test Tag:</label>
+          <select id="tagSelect" required>
+            <option value="">-- Choose a tag --</option>
+          </select>
+        </div>
+
+        <div class="options">
+          <label class="checkbox">
+            <input type="checkbox" id="headedCheck">
+            <span>Headed Mode</span>
+            <span class="help">(see browser)</span>
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox" id="debugCheck">
+            <span>Debug Mode</span>
+            <span class="help">(verbose logging)</span>
+          </label>
+        </div>
+
+        <div class="button-group">
+          <button id="runBtn" class="btn btn-primary" disabled>
+            <span class="btn-text">▶ Run Tests</span>
+            <span class="btn-spinner hidden">⏳</span>
+          </button>
+          <button id="stopBtn" class="btn btn-danger hidden">
+            ⏹ Stop Tests
+          </button>
+        </div>
+      </section>
+
+      <section class="output-panel">
+        <h2>Test Output</h2>
+        <div class="status-badge" id="statusBadge">Ready</div>
+        <div class="output" id="output">
+          <div class="placeholder">Select a test suite and click Run Tests...</div>
+        </div>
+      </section>
+
+      <section class="info-panel">
+        <h3>ℹ️ Quick Tips</h3>
+        <ul>
+          <li><strong>Headed Mode:</strong> See the browser during test execution</li>
+          <li><strong>Debug Mode:</strong> View detailed logs for troubleshooting</li>
+          <li><strong>Output:</strong> Real-time test execution logs appear here</li>
+          <li><strong>Results:</strong> Check the terminal for final results and reports</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>Powered by Cucumber + Playwright + TypeScript</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

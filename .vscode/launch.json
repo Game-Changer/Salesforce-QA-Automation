@@ -1,0 +1,161 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run All Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/cucumber-js",
+      "args": ["--require", "dist/src/step_definitions/**/*.js", "features/**/*.feature"],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "build",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run All Tests (Headed)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/cucumber-js",
+      "args": ["--require", "dist/src/step_definitions/**/*.js", "features/**/*.feature"],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "build",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "HEADED": "true"
+      }
+    },
+    {
+      "name": "Run All Tests (Debug)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/cucumber-js",
+      "args": ["--require", "dist/src/step_definitions/**/*.js", "features/**/*.feature"],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "build",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "DEBUG": "true",
+        "HEADED": "true"
+      }
+    },
+    {
+      "name": "Run @Smoke Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["@Smoke"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run @Smoke Tests (Headed)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["@Smoke", "--headed"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run @Regression Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["@Regression"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run @Regression Tests (Headed)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["@Regression", "--headed"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run @Login Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["@Login"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run @Login Tests (Headed + Debug)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["@Login", "--headed", "--debug"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run @CriticalPath Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["@CriticalPath"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run @CriticalPath Tests (Headed)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["@CriticalPath", "--headed"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run @AccountCreation Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["@AccountCreation"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Run Custom Tag",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/test-runner.js",
+      "args": ["${command:promptString}"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "name": "Debug Test with Breakpoints",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/cucumber-js",
+      "args": ["--require", "dist/src/step_definitions/**/*.js", "features/**/*.feature"],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "build",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "DEBUG": "true",
+        "HEADED": "true"
+      }
+    }
+  ]
+}

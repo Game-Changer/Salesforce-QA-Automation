@@ -3,15 +3,26 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  
   "scripts": {
-  "build": "tsc",
-  "clean": "rm -rf dist reports",
-  "test": "tsc && cucumber-js",
-  "test:headed": "HEADED=true tsc && cucumber-js",
-  "test:debug": "HEADED=true DEBUG=true tsc && cucumber-js"
-},
-
+    "build": "tsc",
+    "clean": "rm -rf dist reports",
+    "activate": "tsc && node dist/salesforce/ActivateDevice.js",
+    "test": "tsc && cucumber-js",
+    "test:headed": "HEADED=true tsc && cucumber-js",
+    "test:debug": "HEADED=true DEBUG=true tsc && cucumber-js",
+    "test:regression": "node test-runner.js @Regression",
+    "test:regression:headed": "node test-runner.js @Regression --headed",
+    "test:smoke": "node test-runner.js @Smoke",
+    "test:smoke:headed": "node test-runner.js @Smoke --headed",
+    "test:login": "node test-runner.js @Login",
+    "test:login:headed": "node test-runner.js @Login --headed",
+    "test:account": "node test-runner.js @AccountCreation",
+    "test:account:headed": "node test-runner.js @AccountCreation --headed",
+    "test:critical": "node test-runner.js @CriticalPath",
+    "test:critical:headed": "node test-runner.js @CriticalPath --headed",
+    "test:by-tag": "node test-runner.js",
+    "test:help": "node test-runner.js --help"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Game-Changer/Salesforce-QA-Automation.git"
@@ -31,5 +42,8 @@
     "dotenv": "^17.4.2",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
