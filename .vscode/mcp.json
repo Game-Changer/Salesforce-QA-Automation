@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "sdlc-orchestrator": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "github:Game-Changer/SDLC-Orchestrator"],
+      "env": { "SDLC_QA_REPO": "${workspaceFolder}" }
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    }
+  }
+}

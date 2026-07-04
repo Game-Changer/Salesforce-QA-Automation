@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "sdlc-orchestrator": {
+      "command": "npx",
+      "args": ["-y", "github:Game-Changer/SDLC-Orchestrator"]
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    }
+  }
+}
