@@ -103,9 +103,9 @@ static async click(locator: string): Promise<void> {
 - Tag every scenario. Current tag vocabulary: `@Smoke`, `@Regression`, `@Login`, `@CriticalPath`, `@AccountCreation`. Feature-area tags (like `@Login`) + suite tags (like `@Smoke`) combine freely.
 - Assertion steps must verify **real outcomes** — e.g., login success means the Lightning home page URL is reached AND the App Launcher is visible (see `HomePage.waitForPageLoad`), never just "page has a title".
 
-### Test case documents (`test-cases/`)
+### Test case documents (`repos/TestCases/` — beside the repo clones, not inside this repo)
 
-- One markdown file per story: `test-cases/<story-id>-<slug>.md`, following [test-cases/TEMPLATE.md](test-cases/TEMPLATE.md) (worked example: `US-001-salesforce-login.md`)
+- One markdown file per story: `repos/TestCases/<story-id>-<slug>.md`, following `TestCases/TEMPLATE.md` (worked example: `US-001-salesforce-login.md`). The folder is a local staging area outside git — create it beside your clone if it doesn't exist
 - IDs are `TC-<AREA>-NNN` (e.g. `TC-LOGIN-001`); continue the area's existing sequence — never reuse or renumber
 - The coverage matrix is mandatory: every acceptance criterion maps to ≥ 1 test case
 - Every case is typed (`Positive`/`Negative`/`Edge`/`Permission`) and marked `Candidate (@Tag)` or `Manual-only (<reason>)`

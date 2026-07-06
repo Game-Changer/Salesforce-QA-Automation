@@ -9,7 +9,6 @@ BDD-based Salesforce test automation using Cucumber + Playwright + TypeScript.
 ```
 Salesforce-QA-Automation/
 ├── features/                    # Cucumber feature files (BDD scenarios)
-├── test-cases/                  # Manual test case docs (one per story, Test Case Writer output)
 ├── src/
 │   ├── step_definitions/        # Cucumber step implementations
 │   ├── pages/                   # Page Object Model
