@@ -103,6 +103,14 @@ static async click(locator: string): Promise<void> {
 - Tag every scenario. Current tag vocabulary: `@Smoke`, `@Regression`, `@Login`, `@CriticalPath`, `@AccountCreation`. Feature-area tags (like `@Login`) + suite tags (like `@Smoke`) combine freely.
 - Assertion steps must verify **real outcomes** — e.g., login success means the Lightning home page URL is reached AND the App Launcher is visible (see `HomePage.waitForPageLoad`), never just "page has a title".
 
+### Test case documents (`test-cases/`)
+
+- One markdown file per story: `test-cases/<story-id>-<slug>.md`, following [test-cases/TEMPLATE.md](test-cases/TEMPLATE.md) (worked example: `US-001-salesforce-login.md`)
+- IDs are `TC-<AREA>-NNN` (e.g. `TC-LOGIN-001`); continue the area's existing sequence — never reuse or renumber
+- The coverage matrix is mandatory: every acceptance criterion maps to ≥ 1 test case
+- Every case is typed (`Positive`/`Negative`/`Edge`/`Permission`) and marked `Candidate (@Tag)` or `Manual-only (<reason>)`
+- Write steps Gherkin-friendly (Given/When/Then translatable) — automation Candidates get lifted into feature files verbatim
+
 ### Introducing a NEW tag — required follow-ups
 
 1. **Dashboard: nothing to do.** `dashboard/server.js` auto-discovers tags by scanning `features/**/*.feature` tag lines. Verify the new tag appears at `http://localhost:3000` after adding it.
