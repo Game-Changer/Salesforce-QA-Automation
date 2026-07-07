@@ -105,7 +105,7 @@ static async click(locator: string): Promise<void> {
 
 ### Test case documents (`repos/TestCases/` — beside the repo clones, not inside this repo)
 
-- One markdown file per story: `repos/TestCases/<story-id>-<slug>.md`, following `TestCases/TEMPLATE.md` (worked example: `US-001-salesforce-login.md`). The folder is a local staging area outside git — create it beside your clone if it doesn't exist
+- One markdown file per story, named `<story-id> Testcases.md` (e.g. `US-001 Testcases.md`) in `repos/TestCases/`, following `TestCases/TEMPLATE.md`. The folder is a local staging area outside git — create it beside your clone if it doesn't exist
 - IDs are `TC-<AREA>-NNN` (e.g. `TC-LOGIN-001`); continue the area's existing sequence — never reuse or renumber
 - The coverage matrix is mandatory: every acceptance criterion maps to ≥ 1 test case
 - Every case is typed (`Positive`/`Negative`/`Edge`/`Permission`) and marked `Candidate (@Tag)` or `Manual-only (<reason>)`
