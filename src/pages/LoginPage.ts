@@ -2,6 +2,7 @@ import { BasePage } from './BasePage';
 import { InputUtils } from '../utils/InputUtils';
 import { WaitUtils } from '../utils/WaitUtils';
 import { Logger } from '../utils/Logger';
+import { Config } from '../utils/config';
 import { LoginPageLocator } from '../locators/LoginPageLocator';
 
 export class LoginPage extends BasePage {
@@ -26,6 +27,46 @@ export class LoginPage extends BasePage {
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       Logger.error(`Failed to navigate to login page: ${errorMessage}`);
+      throw error;
+    }
+  }
+
+  // --- Page-transition validations: prove the script is on the right page
+  // --- before it continues (one verify per screen in the login flow)
+
+  async verifyOnLoginPage(): Promise<void> {
+    try {
+      await this.waitForPageLoad();
+      Logger.pass('Verified: user is on the Salesforce login page');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      Logger.fail(`Not on the Salesforce login page: ${errorMessage}`);
+      throw error;
+    }
+  }
+
+  async verifyOnCustomDomainPage(): Promise<void> {
+    try {
+      await InputUtils.safeWaitForElement(LoginPageLocator.customDomainInputField, 'Custom Domain input field');
+      await InputUtils.safeWaitForElement(LoginPageLocator.continueButton, 'Continue button');
+      Logger.pass('Verified: user is on the Custom Domain page');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      Logger.fail(`Not on the Custom Domain page: ${errorMessage}`);
+      throw error;
+    }
+  }
+
+  async verifyOnOrgLoginPage(): Promise<void> {
+    try {
+      const orgHost = new URL(Config.SF_LOGIN_URL).host;
+      await WaitUtils.waitForUrlContains(orgHost);
+      await InputUtils.safeWaitForElement(LoginPageLocator.usernameInputField, 'Username field');
+      await InputUtils.safeWaitForElement(LoginPageLocator.passwordInputField, 'Password field');
+      Logger.pass(`Verified: user is on the org login page (${orgHost})`);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      Logger.fail(`Not on the org login page: ${errorMessage}`);
       throw error;
     }
   }

@@ -107,18 +107,21 @@ node dashboard/server.js
 ### Feature File
 ```gherkin
 @Login @Smoke
-Scenario: Successful login
-  When User enters valid username from environment
-  And User enters valid password from environment
-  And User clicks login button
-  Then Login should be successful
+Scenario: TC-LOGIN-001 - Successful login
+  When User clicks the Use Custom Domain link
+  Then User is navigated to the Custom Domain page
+  When User enters the valid username from environment
+  And User enters the valid password from environment
+  And User clicks the Log In button
+  Then User validates the Salesforce home page is loaded
 ```
+
+> Scenarios mirror their test case (`repos/TestCases/<story-id> Testcases.md`) and validate the page after **every** page change — see AgentInstructions.md.
 
 ### Step Definition
 ```typescript
-When('User enters valid username from environment', async function () {
-  const username = Config.SF_USERNAME;  // From .env
-  await LoginPage.enterUsername(username);
+When('User enters the valid username from environment', async function () {
+  await loginPage.enterUsername(Config.SF_USERNAME);  // From .env
 });
 ```
 

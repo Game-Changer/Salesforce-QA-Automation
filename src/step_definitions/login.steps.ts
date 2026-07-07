@@ -34,7 +34,9 @@ After(async function () {
   }
 });
 
-Given('User navigates to Salesforce login page', async function () {
+// --- Navigation + page validation ------------------------------------------
+
+Given('User navigates to the Salesforce login page', async function () {
   try {
     await loginPage.navigateToLoginPage();
     Logger.pass('User successfully navigated to login page');
@@ -45,13 +47,51 @@ Given('User navigates to Salesforce login page', async function () {
   }
 });
 
-When('User selects custom domain option', async function () {
+Then('User is on the Salesforce login page', async function () {
   try {
-    await loginPage.clickUseCustomDomain();
-    Logger.pass('User selected custom domain option');
+    await loginPage.verifyOnLoginPage();
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    Logger.fail(`Failed to select custom domain: ${errorMessage}`);
+    Logger.fail(`Login page validation failed: ${errorMessage}`);
+    throw error;
+  }
+});
+
+When('User clicks the Use Custom Domain link', async function () {
+  try {
+    await loginPage.clickUseCustomDomain();
+    Logger.pass('User clicked the Use Custom Domain link');
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    Logger.fail(`Failed to click Use Custom Domain link: ${errorMessage}`);
+    throw error;
+  }
+});
+
+Then('User is navigated to the Custom Domain page', async function () {
+  try {
+    await loginPage.verifyOnCustomDomainPage();
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    Logger.fail(`Custom Domain page validation failed: ${errorMessage}`);
+    throw error;
+  }
+});
+
+When('User enters the custom domain from environment', async function () {
+  try {
+    const loginUrl = Config.SF_LOGIN_URL;
+    // The custom domain field appends ".my.salesforce.com", so capture everything before it
+    // e.g. https://orgname.develop.my.salesforce.com -> orgname.develop
+    const domainMatch = loginUrl.match(/https:\/\/(.+)\.my\.salesforce\.com/);
+    if (!domainMatch || !domainMatch[1]) {
+      throw new Error(`Could not extract domain from URL: ${loginUrl}`);
+    }
+    await loginPage.enterCustomDomain(domainMatch[1]);
+    Logger.pass('User entered the custom domain from environment');
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    Logger.fail(`Failed to enter custom domain: ${errorMessage}`);
     throw error;
   }
 });
@@ -67,32 +107,36 @@ When('User enters custom domain {string}', async function (domain: string) {
   }
 });
 
-When('User enters custom domain from environment', async function () {
+When('User clicks the Continue button', async function () {
   try {
-    const loginUrl = Config.SF_LOGIN_URL;
-    // The custom domain field appends ".my.salesforce.com", so capture everything before it
-    // e.g. https://orgname.develop.my.salesforce.com -> orgname.develop
-    const domainMatch = loginUrl.match(/https:\/\/(.+)\.my\.salesforce\.com/);
-    if (!domainMatch || !domainMatch[1]) {
-      throw new Error(`Could not extract domain from URL: ${loginUrl}`);
-    }
-    const domain = domainMatch[1];
-    await loginPage.enterCustomDomain(domain);
-    Logger.pass('User entered custom domain from environment');
+    await loginPage.clickContinue();
+    Logger.pass('User clicked the Continue button');
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    Logger.fail(`Failed to enter custom domain: ${errorMessage}`);
+    Logger.fail(`Failed to click Continue: ${errorMessage}`);
     throw error;
   }
 });
 
-When('User clicks continue', async function () {
+Then('User is navigated to the org login page', async function () {
   try {
-    await loginPage.clickContinue();
-    Logger.pass('User clicked continue');
+    await loginPage.verifyOnOrgLoginPage();
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    Logger.fail(`Failed to click continue: ${errorMessage}`);
+    Logger.fail(`Org login page validation failed: ${errorMessage}`);
+    throw error;
+  }
+});
+
+// --- Credentials ------------------------------------------------------------
+
+When('User enters the valid username from environment', async function () {
+  try {
+    await loginPage.enterUsername(Config.SF_USERNAME);
+    Logger.pass('User entered the username from environment');
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    Logger.fail(`Failed to enter username: ${errorMessage}`);
     throw error;
   }
 });
@@ -100,7 +144,7 @@ When('User clicks continue', async function () {
 When('User enters username {string}', async function (username: string) {
   try {
     await loginPage.enterUsername(username);
-    Logger.pass(`User entered username`);
+    Logger.pass('User entered username');
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     Logger.fail(`Failed to enter username: ${errorMessage}`);
@@ -108,14 +152,13 @@ When('User enters username {string}', async function (username: string) {
   }
 });
 
-When('User enters valid username from environment', async function () {
+When('User enters the valid password from environment', async function () {
   try {
-    const username = Config.SF_USERNAME;
-    await loginPage.enterUsername(username);
-    Logger.pass('User entered username from environment');
+    await loginPage.enterPassword(Config.SF_PASSWORD);
+    Logger.pass('User entered the password from environment');
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    Logger.fail(`Failed to enter username: ${errorMessage}`);
+    Logger.fail(`Failed to enter password: ${errorMessage}`);
     throw error;
   }
 });
@@ -131,55 +174,46 @@ When('User enters password {string}', async function (password: string) {
   }
 });
 
-When('User enters valid password from environment', async function () {
-  try {
-    const password = Config.SF_PASSWORD;
-    await loginPage.enterPassword(password);
-    Logger.pass('User entered password from environment');
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    Logger.fail(`Failed to enter password: ${errorMessage}`);
-    throw error;
-  }
-});
-
-When('User clicks login button', async function () {
+When('User clicks the Log In button', async function () {
   try {
     await loginPage.clickLogin();
-    Logger.pass('User clicked login button');
+    Logger.pass('User clicked the Log In button');
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    Logger.fail(`Failed to click login button: ${errorMessage}`);
+    Logger.fail(`Failed to click Log In: ${errorMessage}`);
     throw error;
   }
 });
 
-Then('Login should be successful', async function () {
+// --- End-state validations ---------------------------------------------------
+
+Then('User validates the Salesforce home page is loaded', async function () {
   try {
     await homePage.verifyHomePageLoaded();
-    Logger.pass('Login successful - Home page verified');
+    Logger.pass('User validated the Salesforce home page is loaded');
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    Logger.fail(`Login was not successful: ${errorMessage}`);
+    Logger.fail(`Home page validation failed: ${errorMessage}`);
     throw error;
   }
 });
 
-Then('Error message should be displayed', async function () {
+Then('User validates the login error message is displayed', async function () {
   try {
     const isVisible = await loginPage.isErrorMessageVisible();
-    if (isVisible) {
-      const errorText = await loginPage.getErrorMessage();
-      Logger.pass(`Error message displayed: ${errorText}`);
-    } else {
-      throw new Error('Error message is not visible');
+    if (!isVisible) {
+      throw new Error('Login error message is not visible');
     }
+    const errorText = await loginPage.getErrorMessage();
+    Logger.pass(`User validated the login error message: ${errorText}`);
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    Logger.fail(`Error message verification failed: ${errorMessage}`);
+    Logger.fail(`Error message validation failed: ${errorMessage}`);
     throw error;
   }
 });
+
+// --- Composite flows ----------------------------------------------------------
 
 Given('User logs in with valid credentials', async function () {
   try {

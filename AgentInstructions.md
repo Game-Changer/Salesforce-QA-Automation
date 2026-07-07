@@ -92,7 +92,7 @@ static async click(locator: string): Promise<void> {
 
 - **Never hardcode credentials, usernames, passwords, tokens, or org URLs** — not in feature files, not in steps, not in code. Everything comes from `Config` (backed by `.env`).
 - Adding a new env var? Update **three** places: `Config` (the field), `Config.validate()` (if required), and `.env.example` (placeholder value).
-- Feature files use environment-based steps (e.g., `User enters valid username from environment`) — never literal credentials in Gherkin.
+- Feature files use environment-based steps (e.g., `User enters the valid username from environment`) — never literal credentials in Gherkin.
 - Never read, print, or commit `.env` or anything under `.auth/`.
 
 ---
@@ -102,6 +102,21 @@ static async click(locator: string): Promise<void> {
 - Steps must be **generic and reusable** — prefer parameterized (`{string}`) or environment-based steps over scenario-specific ones.
 - Tag every scenario. Current tag vocabulary: `@Smoke`, `@Regression`, `@Login`, `@CriticalPath`, `@AccountCreation`. Feature-area tags (like `@Login`) + suite tags (like `@Smoke`) combine freely.
 - Assertion steps must verify **real outcomes** — e.g., login success means the Lightning home page URL is reached AND the App Launcher is visible (see `HomePage.waitForPageLoad`), never just "page has a title".
+
+### Feature files mirror test cases — with page-transition validation (MANDATORY)
+
+- Each automation `Candidate` test case becomes one scenario. **Name the scenario with its test case ID** for traceability: `Scenario: TC-LOGIN-001 - Successful login with valid credentials using custom domain`.
+- Scenario steps must **match the test case steps**: same actions, same order, same third-person wording (`User clicks the Use Custom Domain link` — no quotes in step text).
+- **After EVERY action that changes the page, add a `Then` step that validates the new page** before the flow continues:
+  ```gherkin
+  When User clicks the Use Custom Domain link
+  Then User is navigated to the Custom Domain page
+  When User enters the custom domain from environment
+  And User clicks the Continue button
+  Then User is navigated to the org login page
+  ```
+- Each validation step is backed by a `verifyOn<Page>()` method on the page object that checks a **page-identifying element** (and the **URL** where it changes meaningfully) — see `LoginPage.verifyOnCustomDomainPage()` / `verifyOnOrgLoginPage()`. A wrong page must fail *at the transition*, not three steps later on a missing field.
+- The final step always validates the scenario's end state (`User validates the Salesforce home page is loaded`, `User validates the login error message is displayed`) — never end on a click.
 
 ### Test case documents (`repos/TestCases/` — beside the repo clones, not inside this repo)
 
