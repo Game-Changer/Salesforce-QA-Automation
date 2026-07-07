@@ -109,7 +109,7 @@ static async click(locator: string): Promise<void> {
 - IDs are `TC-<AREA>-NNN` (e.g. `TC-LOGIN-001`); continue the area's existing sequence — never reuse or renumber
 - The coverage matrix is mandatory: every acceptance criterion maps to ≥ 1 test case
 - Every case is typed (`Positive`/`Negative`/`Edge`/`Permission`) and marked `Candidate (@Tag)` or `Manual-only (<reason>)`
-- Write steps Gherkin-friendly (Given/When/Then translatable) — automation Candidates get lifted into feature files verbatim
+- Steps are **third person, one action per step, fully detailed**: "User navigates to `https://...`", "User clicks the \"Log In\" button", "User validates the App Launcher is visible" — exact URLs, quoted labels, concrete values. Someone who has never seen the system must be able to execute every step. Never write "user logs in as usual". This phrasing matches the Cucumber step definitions, so Candidates lift into feature files verbatim
 
 ### Introducing a NEW tag — required follow-ups
 
